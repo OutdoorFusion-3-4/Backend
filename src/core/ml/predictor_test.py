@@ -18,7 +18,9 @@ class Test_Predictor(unittest.TestCase):
         p.TrainModel(False)
 
         results = p.PredictRevenue([1,2,3], True)
-        if results["prediction"].all() == expected["prediction"].all() & results["prediction"].all() == expected["prediction"].all() & results["prediction"].all() == expected["prediction"].all():
+        if results["prediction"].all() == expected["prediction"].all() \
+                and results["prediction"].all() == expected["prediction"].all() \
+                and results["prediction"].all() == expected["prediction"].all():
             print("Test passed")
         
 
