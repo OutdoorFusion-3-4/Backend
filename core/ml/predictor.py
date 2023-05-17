@@ -1,6 +1,11 @@
 import numpy as np
 from sklearn.linear_model import LinearRegression
 import joblib
+from enum import Enum
+
+class PredictableValues(Enum):
+    Revenues = "revenues.pkl"
+    Profits = "profits.pkl"
 
 class Predictor: 
     def __init__(self):
@@ -9,16 +14,19 @@ class Predictor:
     def LoadData (self, dates: np.array, revenues:np.array):
         self.data_x = dates
         self.data_y = revenues
+        return self
 
-    def TrainModel(self, save: bool = True):
+    def TrainModel(self, save: bool = True, saveTo: PredictableValues = PredictableValues.Revenues):
         self.regressor.fit(self.data_x, self.data_y)
         if save:
-            joblib.dump(self.regressor, "model.pkl")
+            joblib.dump(self.regressor, saveTo.value)
+        return self
     
-    def loadModel(self):
-        self.regressor = joblib.load("model.pkl")
+    def loadModel(self, loadFrom: PredictableValues = PredictableValues.Revenues):
+        self.regressor = joblib.load(loadFrom.value)
+        return self
 
-    def PredictRevenue(self, futureDates: np.array, logs: bool = False):
+    def Predict(self, futureDates: np.array, logs: bool = False):
         futureDates = np.array(futureDates).reshape(-1, 1)
 
         d = dict()
@@ -30,3 +38,4 @@ class Predictor:
             return d 
         
         return d
+
