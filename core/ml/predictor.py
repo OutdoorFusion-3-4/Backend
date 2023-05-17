@@ -16,7 +16,8 @@ class Predictor:
         self.data_y = revenues
         return self
 
-    def TrainModel(self, save: bool = True, saveTo: PredictableValues = PredictableValues.Revenues):
+    def TrainModel(self, save: bool = True, 
+                   saveTo: PredictableValues = PredictableValues.Revenues):
         self.regressor.fit(self.data_x, self.data_y)
         if save:
             joblib.dump(self.regressor, saveTo.value)
