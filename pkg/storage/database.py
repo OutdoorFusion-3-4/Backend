@@ -1,9 +1,14 @@
 import peewee
+import os
+
 
 class Database:
-    def __init__(self, db_path):
-        self.db_path = db_path
+    def __init__(self):
+        self.db_path = os.getenv('DATABASE_PATH', 'database.db')
         self.db = peewee.SqliteDatabase(self.db_path)
+
+    def getDatabaseConnection(self):
+        return self.db
 
     def start_connection(self):
         self.db.connect()

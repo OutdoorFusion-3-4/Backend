@@ -1,39 +1,86 @@
-from flask import Flask, request
+from flask import Blueprint, Flask, request
 from core.ml import predictor
+from pkg.queries.DataQueries import DataQueries
+from pkg.queries.types import GraphQueryParameters
 from ..fileUpload import fileUpload
+from ..storage.database import Database
 import os
+
+api = Blueprint('api_routes', __name__,
+                template_folder='api')
+
 
 class Server:
     def __init__(self):
         self.app = Flask(__name__)
+        self.app.register_blueprint(api, url_prefix='/api')
+        self.db = Database()
 
-        @self.app.route('/api/predictions', methods=['GET'])
+        def getGraphQueryParameters() -> GraphQueryParameters:
+            params = GraphQueryParameters
+            params.dateStart = request.args.get('dateStart')
+            params.dateEnd = request.args.get('dateEnd')
+            params.company = request.args.get('company')
+            return params
+        
+        @api.route('/api/predictions', methods=['GET'])
         def predict():
             dates = request.args.get('dates')
             logs = request.args.get('logs')
-            predictionType: predictor.PredictableValues = request.args.get('predictionType')
+            predictionType: predictor.PredictableValues = request.args.get(
+                'predictionType')
 
             p = predictor.Predictor().loadModel(predictionType)
 
-            return p.Predict(dates,logs=logs)
-        @self.app.route('/api/login', methods=['POST'])
+            return p.Predict(dates, logs=logs)
 
+        @api.route('/api/login', methods=['POST'])
         def login():
             """Logic for login endpoint"""
 
-        @self.app.route('/api/upload', methods=['POST'])
+        @api.route('/api/upload', methods=['POST'])
         def uploadFiles():
             fileType: fileUpload.FileTypes = request.args.get('fileType')
             file = request.files['file']
             if file is None:
                 return "400"
-            
+
             """Logic for file upload"""
-            
+
             return "200"
+
+        @api.route('/api/revenues', methods=['GET'])
+        def revenues(self):
+            params = getGraphQueryParameters()
+            return DataQueries(self.db, params).Revenues()
+        
+        @api.route('/api/profits', methods=['GET'])
+        def profits():
+            params = getGraphQueryParameters()
+            return DataQueries(self.db, params).Profits()
+        
+        @api.route('/api/orders', methods=['GET'])
+        def orders():
+            params = getGraphQueryParameters()
+            return DataQueries(self.db, params).Orders()
+        
+        @api.route('/api/categories', methods=['GET'])
+        def categories():
+            params = getGraphQueryParameters()
+            return DataQueries(self.db, params).Categories()
+        
+        @api.route('/api/order-methods', methods=['GET'])
+        def orderMethods():
+            params = getGraphQueryParameters()
+            return DataQueries(self.db, params).OrderMethods()
+        def products():
+            params = getGraphQueryParameters()
+            return DataQueries(self.db, params).Products()
+        def countries():
+            params = getGraphQueryParameters()
+            return DataQueries(self.db, params).Countries()
         
 
     def run(self):
         port = int(os.getenv('PORT', 8080))
         self.app.run(port=port)
-

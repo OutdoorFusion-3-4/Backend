@@ -1,8 +1,9 @@
 import peewee
+import pkg.storage.database as Database
 
 class BaseModel(peewee.Model):
     class Meta:
-        database = db
+        database = Database().getDatabase()
 
 class Company(BaseModel):
     company_id = peewee.AutoField()
@@ -31,10 +32,14 @@ class Customer(BaseModel):
     country = peewee.CharField()
     birthday = peewee.DateField()
     gender = peewee.CharField()
+class OrderMethod(BaseModel):
+    order_method_id = peewee.AutoField()
+    order_method_name = peewee.CharField()
 
 class Order(BaseModel):
     order_id = peewee.AutoField()
     order_date = peewee.DateField()
+    order_method = peewee.ForeignKeyField(OrderMethod, backref='orders')
     customer = peewee.ForeignKeyField(Customer, backref='orders')
 
 class OrderProduct(BaseModel):
