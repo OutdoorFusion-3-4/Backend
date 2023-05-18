@@ -1,5 +1,4 @@
 import peewee
-import sqlite3
 
 db = peewee.SqliteDatabase('outdoorfusion.db')
 
