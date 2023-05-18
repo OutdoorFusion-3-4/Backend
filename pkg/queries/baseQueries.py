@@ -1,9 +1,9 @@
 import datetime
-from pkg.storage.database import Database
+from core.storage.database import IDatabase
 
 
 class BaseQueries:
-    def __init__(self, dbConnection: Database):
+    def __init__(self, dbConnection: IDatabase):
         self.dbConnection = dbConnection
 
     def from_iso_string(self, iso_string: str):

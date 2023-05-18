@@ -1,8 +1,9 @@
 import peewee
 import os
+from core.storage.database import IDatabase
 
 
-class Database:
+class Database(IDatabase):
     def __init__(self):
         self.db_path = os.getenv('DATABASE_PATH', 'database.db')
         self.db = peewee.SqliteDatabase(self.db_path)

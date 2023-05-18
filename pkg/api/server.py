@@ -23,7 +23,7 @@ class Server:
             params.company = request.args.get('company')
             return params
         
-        @api.route('/api/predictions', methods=['GET'])
+        @api.route('/predictions', methods=['GET'])
         def predict():
             dates = request.args.get('dates')
             logs = request.args.get('logs')
@@ -34,11 +34,11 @@ class Server:
 
             return p.Predict(dates, logs=logs)
 
-        @api.route('/api/login', methods=['POST'])
+        @api.route('/login', methods=['POST'])
         def login():
             """Logic for login endpoint"""
 
-        @api.route('/api/upload', methods=['POST'])
+        @api.route('/upload', methods=['POST'])
         def uploadFiles():
             fileType: fileUpload.FileTypes = request.args.get('fileType')
             file = request.files['file']
@@ -49,27 +49,27 @@ class Server:
 
             return "200"
 
-        @api.route('/api/revenues', methods=['GET'])
+        @api.route('/revenues', methods=['GET'])
         def revenues(self):
             params = getGraphQueryParameters()
             return DataQueries(self.db, params).Revenues()
         
-        @api.route('/api/profits', methods=['GET'])
+        @api.route('/profits', methods=['GET'])
         def profits():
             params = getGraphQueryParameters()
             return DataQueries(self.db, params).Profits()
         
-        @api.route('/api/orders', methods=['GET'])
+        @api.route('/orders', methods=['GET'])
         def orders():
             params = getGraphQueryParameters()
             return DataQueries(self.db, params).Orders()
         
-        @api.route('/api/categories', methods=['GET'])
+        @api.route('/categories', methods=['GET'])
         def categories():
             params = getGraphQueryParameters()
             return DataQueries(self.db, params).Categories()
         
-        @api.route('/api/order-methods', methods=['GET'])
+        @api.route('/order-methods', methods=['GET'])
         def orderMethods():
             params = getGraphQueryParameters()
             return DataQueries(self.db, params).OrderMethods()

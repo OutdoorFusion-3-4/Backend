@@ -1,4 +1,4 @@
-from pkg.storage.database import Database
+from core.storage.database import IDatabase
 from core.storage.dbModels import Category, OrderMethod, Product, Order, OrderProduct, ProductCategory, Customer
 from queries.types import GraphQueryParameters, Results
 from queries.baseQueries import BaseQueries
@@ -6,7 +6,7 @@ from peewee import fn
 
 
 class DataQueries (BaseQueries):
-    def __init__(self, dbConnection: Database, parameters: GraphQueryParameters):
+    def __init__(self, dbConnection: IDatabase, parameters: GraphQueryParameters):
         self.dbConnection = dbConnection
         self.parameters = parameters
 
