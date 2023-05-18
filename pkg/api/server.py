@@ -28,7 +28,8 @@ class Server:
             if file is None:
                 return "400"
             
-            fileUpload.UploadFile(file, fileType).parseCSV()
+            """Logic for file upload"""
+            
             return "200"
         
 
