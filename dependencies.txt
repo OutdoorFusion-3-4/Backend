@@ -1,4 +1,6 @@
 numpy
 scikit-learn
 joblib
+peewee
 flask
+
