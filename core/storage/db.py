@@ -1,7 +1,5 @@
 import peewee
 
-db = peewee.SqliteDatabase('outdoorfusion.db')
-
 class BaseModel(peewee.Model):
     class Meta:
         database = db
@@ -45,6 +43,5 @@ class OrderProduct(BaseModel):
     order = peewee.ForeignKeyField(Order, backref='order_products')
     product = peewee.ForeignKeyField(Product, backref='order_products')
 
-# Tables creation
-db.connect()
-db.create_tables([Company, Product, Category, ProductCategory, Customer, Order, OrderProduct])
+
+
