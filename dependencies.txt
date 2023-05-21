@@ -1,7 +1,9 @@
 numpy
 scikit-learn
 joblib
-peewee
 flask
+pandas
+bcrypt
+PyJWT
+peewee
 python-dateutil
-
