@@ -1,12 +1,10 @@
 import sys
-
 sys.path.append('./')
 import pkg.api.server as server
 
-
 def main():
-    server.run()
-
+    s = server.Server()
+    s.run()
 
 if __name__ == '__main__':
     main()
