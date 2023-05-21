@@ -3,4 +3,5 @@ scikit-learn
 joblib
 peewee
 flask
+python-dateutil
 

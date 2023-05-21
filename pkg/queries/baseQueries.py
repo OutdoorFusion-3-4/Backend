@@ -1,7 +1,5 @@
-import datetime
 from core.storage.database import IDatabase
-
-
+from dateutil import parser
 class BaseQueries:
     def __init__(self, dbConnection: IDatabase):
         self.dbConnection = dbConnection
@@ -12,5 +10,5 @@ class BaseQueries:
             return None
 
         # Convert ISO string to datetime object
-        dt = datetime.datetime.fromisoformat(iso_string)
+        dt = parser.isoparse(iso_string)
         return dt

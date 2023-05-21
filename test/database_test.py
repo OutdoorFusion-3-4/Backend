@@ -183,7 +183,8 @@ class Test_DataQueries(unittest.TestCase):
         params.companies = [1]
         try:
            res = DataQueries(db, params).Orders()
-           self.assertEqual(res[0].Amount, 8)
+           print(res)
+           self.assertEqual(res[0]['Amount'], 8)
         except Exception as e:
             self.fail(e)
         finally:
@@ -195,7 +196,7 @@ class Test_DataQueries(unittest.TestCase):
         params.companies = [1, 2]
         try:
            res = DataQueries(db, params).Orders()
-           self.assertEqual(res[0].Amount, 20)
+           self.assertEqual(res[0]['Amount'], 20)
         except Exception as e:
             self.fail(e)
         finally:

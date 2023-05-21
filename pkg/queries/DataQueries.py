@@ -3,13 +3,15 @@ from core.storage.dbModels import Category, OrderMethod, Product, Order, OrderPr
 from .types import GraphQueryParameters, Results
 from .baseQueries import BaseQueries
 from peewee import fn
-
+from json import loads
 
 class DataQueries (BaseQueries):
     def __init__(self, dbConnection: IDatabase, parameters: GraphQueryParameters):
         self.dbConnection = dbConnection
         self.parameters = parameters
-
+        # transform string to list
+        if type(self.parameters.companies) is str:
+            self.parameters.companies = loads(self.parameters.companies)
         # transform iso string to datetime object
         self.parameters.dateStart = self.from_iso_string(
             self.parameters.dateStart)
@@ -94,7 +96,8 @@ class DataQueries (BaseQueries):
         query = self.__checkCompanies(query, OrderProduct.product.company)
         query = self.__checkDates(query, Order.order_date)
         self.dbConnection.close_connection()
-        return query
+
+        return list(query.dicts())
 
     def Categories(self) -> list:
         self.dbConnection.start_connection()
@@ -108,10 +111,9 @@ class DataQueries (BaseQueries):
         query = self.__checkCompanies(query, Product.company)
         query = query.distinct()
         query = (query .group_by(Category.name))
-        print(query)
 
         self.dbConnection.close_connection()
-        return query
+        return list(query.dicts())
 
     def OrderMethods(self) -> list:
         self.dbConnection.start_connection()
@@ -123,7 +125,7 @@ class DataQueries (BaseQueries):
         query = self.__checkCompanies(query, Product.company)
         query = query.group_by(OrderMethod.order_method_name)
         self.dbConnection.close_connection()
-        return query
+        return list(query.dicts())
 
     def Products(self) -> list:
         self.dbConnection.start_connection()
@@ -133,9 +135,9 @@ class DataQueries (BaseQueries):
         query = self.__checkDates(query, Order.order_date)
         query = self.__checkCompanies(query, Product.company)
         query = query.group_by(Product.product_name)
-        
+
         self.dbConnection.close_connection()
-        return query
+        return list(query.dicts())
 
     def Countries(self) -> list:
         self.dbConnection.start_connection()
@@ -147,6 +149,5 @@ class DataQueries (BaseQueries):
         query = self.__checkCompanies(query, Product.company)
         query = query.group_by(Customer.country)
         query = query.distinct()
-        print(query)
         self.dbConnection.close_connection()
-        return query
+        return list(query.dicts())

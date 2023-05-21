@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 class BaseQueryParameters:
     companies: list
 
@@ -12,12 +14,12 @@ class GraphQueryParameters(BaseQueryParameters):
         self.dateStart = None
         self.dateEnd = None
 
-
+@dataclass
 class _ResultsPerDate:
     date: str
     result: float
 
-
+@dataclass
 class Results:
     result: float
     resultPerDate: list[_ResultsPerDate]
