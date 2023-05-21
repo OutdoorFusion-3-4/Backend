@@ -5,7 +5,5 @@ flask
 pandas
 bcrypt
 PyJWT
-dotenv
 peewee
-flask
 python-dateutil
