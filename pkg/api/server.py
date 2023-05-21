@@ -73,12 +73,15 @@ class Server:
         def orderMethods():
             params = getGraphQueryParameters()
             return DataQueries(self.db, params).OrderMethods()
+        @api.route('/products', methods=['GET'])
         def products():
             params = getGraphQueryParameters()
             return DataQueries(self.db, params).Products()
+        @api.route('/countries', methods=['GET'])
         def countries():
             params = getGraphQueryParameters()
             return DataQueries(self.db, params).Countries()
+        
         
 
     def run(self):

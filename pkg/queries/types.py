@@ -1,10 +1,16 @@
 class BaseQueryParameters:
-    company: int
+    companies: list
+
+    def __init__(self):
+        self.companies = []
 
 
 class GraphQueryParameters(BaseQueryParameters):
     dateStart: str
     dateEnd: str
+    def __init__(self):
+        self.dateStart = None
+        self.dateEnd = None
 
 
 class _ResultsPerDate:
@@ -14,4 +20,7 @@ class _ResultsPerDate:
 
 class Results:
     result: float
-    resultPerDate: _ResultsPerDate
+    resultPerDate: list[_ResultsPerDate]
+    def __init__(self):
+        self.result = 0
+        self.resultPerDate = []
