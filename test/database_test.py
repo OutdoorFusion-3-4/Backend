@@ -236,6 +236,7 @@ class Test_DataQueries(unittest.TestCase):
             self.fail(e)
         finally:
             db.teardown()
+
     def test_Countries(self):
         db = TestDatabase()
         params = GraphQueryParameters()
