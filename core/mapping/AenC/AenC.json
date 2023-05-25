@@ -1,0 +1,56 @@
+{
+  "tables": [
+    {
+      "table_name": "Product",
+      "column_names": {
+        "product_name": "name",
+        "product_sale_price": "unit_price",
+        "description": "description",
+        "company": "Company",
+        "category": "Category",
+        "original_id": "id"
+      }
+    },
+    {
+      "table_name": "Company",
+      "column_names": {
+        "company_name": "AenC",
+        "description": "description"
+      }
+    },
+    {
+      "table_name": "Category",
+      "column_names": {
+        "name": "Category",
+        "description": "description"
+      }
+    },
+    {
+      "table_name": "Customer",
+      "column_names": {
+        "customer_id": "id",
+        "name": ["fname", "lname"],
+        "birthday": "birthday",
+        "gender": "gender"
+      }
+    },
+    {
+      "table_name": "Order",
+      "column_names": {
+        "order_date": "order_date",
+        "customer": "cust_id",
+        "product": "Product",
+        "original_id": "id"
+      }
+    },
+    {
+  "table_name": "OrderProduct",
+  "column_names": {
+    "quantity": "quantity",
+    "order_id": "id",
+    "product_id": "prod_id"
+  }
+}
+
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "tables": [
+    {
+      "table_name": "Category",
+      "custom_table_name": "ProductSubcategory.csv",
+      "column_names": {
+        "name": "Name",
+        "category_id": "ProductSubcategoryID",
+        "OtherCategory_id": "ProductCategoryID"
+      }
+    },
+{
+      "table_name": "Category",
+      "custom_table_name": "ProductCategory.csv",
+      "column_names": {
+        "name": "Name",
+        "category_id": "ProductCategoryID"
+      }
+    },
+    {
+      "table_name": "OrderMethod",
+      "column_names": {
+        "orderMethod_id": "ShipMethodID",
+        "orderMethod_name": "Name"
+      }
+    },
+    {
+      "table_name": "Product",
+      "custom_table_name": "Product.csv",
+      "column_names": {
+        "product_name": "Name",
+        "product_sale_price": "StandardCost",
+        "description": "Description",
+        "company": "Company",
+        "category_id": "ProductSubcategoryID",
+        "original_id": "ProductID",
+        "ordermethod": "Name"
+      }
+    },
+    {
+      "table_name": "Company",
+      "column_names": {
+        "company_name": "AdventureWorks",
+        "description": "description"
+      }
+    },
+
+    {
+      "table_name": "Customer",
+      "custom_table_name": "Customer.csv",
+      "column_names": {
+        "customer_id": "CustomerID",
+        "name": "AccountNumber"
+      }
+    },
+    {
+      "table_name": "Order",
+      "custom_table_name": "SalesOrderHeader.csv",
+      "column_names": {
+        "order_date": "OrderDate",
+        "customer": "CustomerID",
+        "shipping_method": "ShipMethodID",
+        "original_id": "SalesOrderID"
+      }
+    },
+    {
+  "table_name": "OrderProduct",
+      "custom_table_name": "SalesOrderDetail.csv",
+  "column_names": {
+    "quantity": "OrderQty",
+    "order_id": "SalesOrderID",
+    "product_id": "ProductID"
+  }
+}
+
+  ]
+}

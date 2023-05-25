@@ -1,0 +1,51 @@
+{
+  "tables": [
+    {
+      "table_name": "Product",
+      "column_names": {
+        "product_name": "Product",
+        "product_sale_price": "Unit_Price",
+        "product_cost_price": "Unit_Cost"
+      }
+    },
+    {
+      "table_name": "Company",
+      "column_names": {
+        "company_name": "BikeStoreSales"
+      }
+    },
+    {
+      "table_name": "Category",
+      "column_names": {
+        "name": "Product_Category"
+      }
+    },
+    {
+      "table_name": "Category",
+      "column_names": {
+        "name": "Sub_Category"
+      }
+    },
+    {
+      "table_name": "Customer",
+      "column_names": {
+        "country": "Country",
+        "birthday": ["Day", "Month", "Year"],
+        "gender": "Customer_Gender"
+      }
+    }
+    ,
+    {
+      "table_name": "Order",
+      "column_names": {
+        "order_date": "Date"
+      }
+    },
+    {
+      "table_name": "OrderProduct",
+      "column_names": {
+        "quantity": "Order_Quantity"
+      }
+    }
+  ]
+}

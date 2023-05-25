@@ -1,8 +1,7 @@
 import peewee
 import pkg.storage.database as Database
 import os
-
-
+os.environ['db'] = 'database.db'
 class BaseModel(peewee.Model):
     class Meta:
         database = peewee.SqliteDatabase(os.environ['db'])
@@ -16,9 +15,9 @@ class Company(BaseModel):
 class Product(BaseModel):
     product_id = peewee.AutoField()
     product_name = peewee.CharField(null=False)
-    description = peewee.CharField()
-    product_sale_price = peewee.FloatField()
-    product_cost_price = peewee.FloatField()
+    description = peewee.CharField(null=True)
+    product_sale_price = peewee.FloatField(null=True)
+    product_cost_price = peewee.FloatField(null=True)
     company = peewee.ForeignKeyField(Company, backref='products')
 
 
@@ -35,10 +34,10 @@ class ProductCategory(BaseModel):
 
 class Customer(BaseModel):
     customer_id = peewee.AutoField()
-    name = peewee.CharField()
-    country = peewee.CharField()
-    birthday = peewee.DateField()
-    gender = peewee.CharField()
+    name = peewee.CharField(null=True)
+    country = peewee.CharField(null=True)
+    birthday = peewee.DateField(null=True)
+    gender = peewee.CharField(null=True)
 
 
 class OrderMethod(BaseModel):
@@ -48,13 +47,13 @@ class OrderMethod(BaseModel):
 
 class Order(BaseModel):
     order_id = peewee.AutoField()
-    order_date = peewee.DateField()
-    order_method = peewee.ForeignKeyField(OrderMethod, backref='orders')
-    customer = peewee.ForeignKeyField(Customer, backref='orders')
+    order_date = peewee.DateField(null=True)
+    order_method = peewee.ForeignKeyField(OrderMethod, null=True, backref='orders')
+    customer = peewee.ForeignKeyField(Customer, null=True, backref='orders')
 
 
 class OrderProduct(BaseModel):
     order_product_id = peewee.AutoField()
-    quantity = peewee.IntegerField()
+    quantity = peewee.IntegerField(null=True)
     order = peewee.ForeignKeyField(Order, backref='order_products')
     product = peewee.ForeignKeyField(Product, backref='order_products')
