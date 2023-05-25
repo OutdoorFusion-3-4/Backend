@@ -26,6 +26,20 @@ def getGraphQueryParameters() -> GraphQueryParameters:
     return params
 
 
+@api.before_request
+def validateToken():
+    if request.path == '/api/login' or request.path == '/api/register':
+        return
+
+    token = request.cookies.get('Token')
+    if token is None:
+        return Response('Unauthorized', status=401)
+
+    try:
+        jwt.decode(token, app.config["SECRET_KEY"])
+    except:
+        return Response('Unauthorized', status=401)
+    
 @api.route('/predictions', methods=['GET'])
 def predict():
     dates = request.args.get('dates')
