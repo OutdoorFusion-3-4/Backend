@@ -16,13 +16,13 @@ class GraphQueryParameters(BaseQueryParameters):
 
 @dataclass
 class _ResultsPerDate:
-    date: str
-    result: float
+    Amount: float
+    Date: str
 
 @dataclass
 class Results:
-    result: float
+    fields: list[str]
     resultPerDate: list[_ResultsPerDate]
     def __init__(self):
-        self.result = 0
+        self.fields = []
         self.resultPerDate = []

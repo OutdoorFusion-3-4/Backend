@@ -125,7 +125,11 @@ class Test_DataQueries(unittest.TestCase):
         params.companies = [1]
         try:
            res = DataQueries(db, params).Revenues()
-           self.assertEqual(res.result, 220.0)
+           answ = 0
+
+           for i in res.resultPerDate:
+                answ += i["Amount"]
+           self.assertEqual(answ , 220.0)
            self.assertEqual(len(res.resultPerDate), 4)
         except Exception as e:
             self.fail(e)
@@ -136,11 +140,13 @@ class Test_DataQueries(unittest.TestCase):
         db = TestDatabase()
         params = GraphQueryParameters()
         params.companies = [2]
-        print('params:', params.companies)
-        print(params)
         try:
            res = DataQueries(db, params).Revenues()
-           self.assertEqual(res.result, 3800.0)
+           answ = 0
+           for i in res.resultPerDate:
+                answ += i["Amount"]
+
+           self.assertEqual(answ, 3800.0)
            self.assertEqual(len(res.resultPerDate), 4)
         except Exception as e:
             self.fail(e)
@@ -155,7 +161,11 @@ class Test_DataQueries(unittest.TestCase):
         params.companies = [1]
         try:
            res = DataQueries(db, params).Profits()
-           self.assertEqual(res.result, 80.0)
+           answ = 0
+           for i in res.resultPerDate:
+                answ += i["Amount"]
+
+           self.assertEqual(answ, 80.0)
            self.assertEqual(len(res.resultPerDate), 4)
         except Exception as e:
             self.fail(e)
@@ -168,7 +178,11 @@ class Test_DataQueries(unittest.TestCase):
         params.companies = [2]
         try:
            res = DataQueries(db, params).Profits()
-           self.assertEqual(res.result, 800.0)
+           answ = 0 
+           for i in res.resultPerDate:
+                answ += i["Amount"]
+
+           self.assertEqual(answ, 800.0)
            self.assertEqual(len(res.resultPerDate), 4)
         except Exception as e:
             self.fail(e)
@@ -183,8 +197,7 @@ class Test_DataQueries(unittest.TestCase):
         params.companies = [1]
         try:
            res = DataQueries(db, params).Orders()
-           print(res)
-           self.assertEqual(res[0]['Amount'], 8)
+           self.assertEqual(res.resultPerDate[0]['Amount'], 8)
         except Exception as e:
             self.fail(e)
         finally:
@@ -196,7 +209,7 @@ class Test_DataQueries(unittest.TestCase):
         params.companies = [1, 2]
         try:
            res = DataQueries(db, params).Orders()
-           self.assertEqual(res[0]['Amount'], 20)
+           self.assertEqual(res.resultPerDate[0]['Amount'], 20)
         except Exception as e:
             self.fail(e)
         finally:
@@ -208,7 +221,7 @@ class Test_DataQueries(unittest.TestCase):
         params.companies = [1, 2]
         try:
            res = DataQueries(db, params).Categories()
-           self.assertEqual(len(res), 3)
+           self.assertEqual(len(res.resultPerDate), 3)
         except Exception as e:
             self.fail(e)
         finally:
@@ -220,7 +233,7 @@ class Test_DataQueries(unittest.TestCase):
         params.companies = [1, 2]
         try:
            res = DataQueries(db, params).OrderMethods()
-           self.assertEqual(len(res), 2)
+           self.assertEqual(len(res.resultPerDate), 2)
         except Exception as e:
             self.fail(e)
         finally:
@@ -232,7 +245,7 @@ class Test_DataQueries(unittest.TestCase):
         params.companies = [1, 2]
         try:
            res = DataQueries(db, params).Products()
-           self.assertEqual(len(res), 4)
+           self.assertEqual(len(res.resultPerDate), 4)
         except Exception as e:
             self.fail(e)
         finally:
@@ -244,7 +257,7 @@ class Test_DataQueries(unittest.TestCase):
         params.companies = [1, 2]
         try:
            res = DataQueries(db, params).Countries()
-           self.assertEqual(len(res), 2)
+           self.assertEqual(len(res.resultPerDate), 2)
         except Exception as e:
             self.fail(e)
         finally:
