@@ -1,5 +1,4 @@
 import peewee
-import pkg.storage.database as Database
 import os
 os.environ['db'] = 'database.db'
 class BaseModel(peewee.Model):
