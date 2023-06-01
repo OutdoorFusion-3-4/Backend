@@ -1,7 +1,7 @@
 import csv
 from core.storage.dbModels import Company, Product, Category, ProductCategory, Customer, Order, OrderProduct, OrderMethod
 import datetime
-
+import logging
 
 def get_mapped_column(table, original_column_name):
     column_names = table["column_names"]
@@ -9,6 +9,9 @@ def get_mapped_column(table, original_column_name):
         return column_names[original_column_name]
     return None
 
+def log_exception(table, e, row):
+    logging.error(f"Error creating {table}: {e}")
+    logging.error(f"Row data: {row}")
 
 def create_company(table, row):
     company_name = get_mapped_column(table, "company_name")
@@ -16,8 +19,7 @@ def create_company(table, row):
         company, created = Company.get_or_create(company_name=company_name)
         return company
     except Exception as e:
-        print(f"Error creating company: {e}")
-        print(f"Row data: {row}")
+        log_exception("Company",e, row)
     return None
 
 
@@ -55,8 +57,7 @@ def create_product(mapping, table, row):
                 company=product_company)
             return product, original_product_id, original_category_id, category_name, None  # Return created product instance
         except Exception as e:
-            print(f"Error creating product: {e}")
-            print(f"Row data: {row}")
+            log_exception("Product",e, row)
     return None, None, None, None, None
 
 
@@ -65,7 +66,6 @@ def single_create_product_category(product, categories):
             None:
         try:
             for category in categories:
-                # make sure you're passing a single instance of product and category, not lists
                 product_category, created = ProductCategory.get_or_create(
                     product=product[0],
                     category=category[0]
@@ -84,8 +84,7 @@ def create_category(table, row):
             category, created = Category.get_or_create(name=category_name)
             return category, original_id, other_category, category_name
         except Exception as e:
-            print(f"Error creating category: {e}")
-            print(f"Row data: {row}")
+            log_exception("Category",e, row)
     return None, None, None, None
 
 def create_product_category(product, globalinstances):
@@ -149,12 +148,10 @@ def create_customer(table, row):
             birthday=birthday,
             gender=gender
         )
-        # Assuming the 'customer_id' column in your CSV contains original customer_id
         original_customer_id = row.get(get_mapped_column(table, "customer_id"))
         return customer, original_customer_id
     except Exception as e:
-        print(f"Error creating customer: {e}")
-        print(f"Row data: {row}")
+        log_exception("Customer",e, row)
 
     return None, None
 
@@ -169,8 +166,7 @@ def create_order_method(table, row):
             )
             return orderMethod, mapped_column_order_method_Id  # Return created order instance
         except Exception as e:
-            print(f"Error creating orderMethod: {e}")
-            print(f"Row data: {row}")
+            log_exception("OrderMethod",e, row)
     return None, None
 def create_order(table, row, customer, globalinstances):
     shipping_method = None
@@ -179,9 +175,7 @@ def create_order(table, row, customer, globalinstances):
 
     customerId = row.get(get_mapped_column(table, "customer"))
 
-    # Get the order_date from the row, if it exists
     if isinstance(mapped_column_order_date, list):
-        # If it's a list, construct the birthday string using all the components
         day, month, year = (row.get(col) for col in mapped_column_order_date)
         order_date = f"{day}-{month}-{year}"
     else:
@@ -192,7 +186,6 @@ def create_order(table, row, customer, globalinstances):
 
     original_order_id = row.get(get_mapped_column(table, "original_id"))
 
-    # Find the customer with matching customer ID in globalinstances
     matched_customer = None
     for customer_tuple in globalinstances.get('customer', []):
         customer_instance, original_customer_id = customer_tuple
@@ -232,8 +225,7 @@ def create_order(table, row, customer, globalinstances):
         )
         return order, original_order_id  # Return created order instance
     except Exception as e:
-        print(f"Error creating order: {e}")
-        print(f"Row data: {row}")
+        log_exception("Order",e, row)
 
     return None, None
 
