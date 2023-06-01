@@ -3,18 +3,12 @@ from core.storage.dbModels import Company, Product, Category, ProductCategory, C
 import datetime
 
 
-class mapping:
-    def __init__(self, mapping: dict):
-        self.mapping = mapping
-    def test(self):
-        self.mapping
-
-
 def get_mapped_column(table, original_column_name):
     column_names = table["column_names"]
     if original_column_name in column_names:
         return column_names[original_column_name]
     return None
+
 
 def create_company(table, row):
     company_name = get_mapped_column(table, "company_name")
@@ -52,7 +46,6 @@ def create_product(mapping, table, row):
             original_category_id = ''
         if (row.get(get_mapped_column(table, "category"))) is not None:
             category_name = row.get(get_mapped_column(table, "category"))
-        print("Maak aan")
         try:
             product, created = Product.get_or_create(
                 product_name=product_name,
@@ -68,9 +61,8 @@ def create_product(mapping, table, row):
 
 
 def single_create_product_category(product, categories):
-    print(product)
-    print(categories)
-    if product[0] is not None and categories is not None:
+    if product[0] is not None and categories is not\
+            None:
         try:
             for category in categories:
                 # make sure you're passing a single instance of product and category, not lists

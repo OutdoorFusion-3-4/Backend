@@ -6,7 +6,7 @@ os.environ['db'] = 'database.db'
 from core.mapping.mappingStart import process_csv_folder
 def main():
 
-    FileName = 'BikeStoreSales.json'
+    FileName = 'Northwind.json'
     ProcessFolderName = 'verwerken'
     process_csv_folder(ProcessFolderName, FileName)
 
