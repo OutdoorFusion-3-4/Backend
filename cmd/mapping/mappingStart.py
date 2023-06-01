@@ -7,8 +7,7 @@ from pkg.storage.database import Database
 from core.mapping.mappingStart import mapping
 def main():
     database = Database()
-    db = database.start_connection()
-    m = mapping(db)
+    m = mapping(database)
 
     FileName = 'Northwind.json'
     ProcessFolderName = 'verwerken'

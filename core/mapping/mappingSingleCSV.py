@@ -2,16 +2,19 @@ import csv
 from core.mapping.mapping import *
 import peewee
 from pkg.queries.baseQueries import *
+
 class mappingSingleCsv (BaseQueries):
     def __init__(self, dbConnection: IDatabase):
         self.dbConnection = dbConnection
+        self.dbConnection.start_connection()
+        return self
     def process_single_csv(self, filename, mapping, globalinstances):
         customer_mapping = {}
         with open(filename, 'r') as file:
             reader = csv.DictReader(file)
             for row in reader:
                 instances = {}
-                with self.dbConnection.atomic():
+                with self.dbConnection.getDatabaseConnection.atomic():
                     for table in mapping['tables']:
                         if table['table_name'] == 'Company':
                             instances.setdefault('company', []).append(create_company(table, row))

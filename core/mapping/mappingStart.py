@@ -7,9 +7,11 @@ import chardet
 from core.mapping.mappingSingleCSV import *
 csv.field_size_limit(2147483647)
 from pkg.queries.baseQueries import *
+
 class mapping (BaseQueries):
     def __init__(self, dbConnection: IDatabase):
         self.dbConnection = dbConnection
+        
     def get_file_encoding(self, file_path):
         with open(file_path, 'rb') as file:
             result = chardet.detect(file.read())
@@ -27,11 +29,12 @@ class mapping (BaseQueries):
         csv_count = sum(1 for filename in os.listdir(folder_path) if filename.endswith('.csv'))
 
         if csv_count < 2:
-            self.process_all_files_in_folder(folder_path, self.process_single_csv, mapping, globalinstances)
+            self.process_all_files_in_folder(folder_path, mappingSingleCsv(dbConnection=self.dbConnection).process_single_csv, mapping, globalinstances)
         else:
             self.process_all_files_in_folder(folder_path, self.first_process_csv, mapping, globalinstances)
             self.process_all_files_in_folder(folder_path, self.second_process_csv, mapping, globalinstances)
             self.process_all_files_in_folder(folder_path, self.third_process_csv, mapping, globalinstances)
+
     def process_all_files_in_folder(self,folder_path, processing_function, mapping, globalinstances):
         for filename in os.listdir(folder_path):
             self.process_csv_file(filename, folder_path, processing_function, mapping, globalinstances)
@@ -41,11 +44,14 @@ class mapping (BaseQueries):
             processing_function(file_path, mapping, globalinstances)
 
     def first_process_csv(self, filename, mapping, globalinstances):
+        if self.dbConnection == None:
+            return
+        
         with open(filename, 'r', encoding=self.get_file_encoding(filename)) as file:
             reader = csv.DictReader(file)
             for row in reader:
                 condition_met = False
-                with self.dbConnection.atomic():
+                with self.dbConnection.getDatabaseConnection().atomic():
                     for table in mapping['tables']:
                         if table['table_name'] == 'OrderMethod':
                             ordermethod, original_ordermethod_id= create_order_method(table, row)
@@ -71,7 +77,7 @@ class mapping (BaseQueries):
             reader = csv.DictReader(file)
             for row in reader:
                 condition_met = False
-                with self.dbConnection.atomic():
+                with self.dbConnection.getDatabaseConnection().atomic():
                     for table in mapping['tables']:
                         if table['table_name'] == 'Company':
                             condition_met = True
