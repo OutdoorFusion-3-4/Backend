@@ -2,13 +2,18 @@ import sys
 sys.path.append('./')
 import os
 os.environ['db'] = 'database.db'
+from pkg.storage.database import Database
 
-from core.mapping.mappingStart import process_csv_folder
+from core.mapping.mappingStart import mapping
 def main():
+    database = Database()
+    db = database.start_connection()
+    m = mapping(db)
 
     FileName = 'Northwind.json'
     ProcessFolderName = 'verwerken'
-    process_csv_folder(ProcessFolderName, FileName)
+    print(m)
+    m.process_csv_folder(ProcessFolderName, FileName)
 
 if __name__ == '__main__':
     main()
