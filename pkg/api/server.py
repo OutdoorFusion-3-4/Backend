@@ -10,13 +10,18 @@ from core.ml import predictor
 from pkg.api import authentication
 from pkg.queries.DataQueries import DataQueries
 from pkg.queries.types import GraphQueryParameters
+from core.mapping.mappingStart import Mapping
 
 db = Database()
 port = int(os.getenv('PORT', 8080))
 
+ALLOWED_EXTENSIONS = {'csv', '.accdb'}
 api = Blueprint('api_routes', __name__,
                 template_folder='api')
-
+def getFileExtension(filename):
+    if '.' not in filename:
+        return ''
+    return filename.rsplit('.', 1)[1].lower()
 
 def getGraphQueryParameters() -> GraphQueryParameters:
     params = GraphQueryParameters()
@@ -93,14 +98,27 @@ def logout():
 
 @api.route('/upload', methods=['POST'])
 def uploadFiles():
-    fileType: fileUpload.FileTypes = request.args.get('fileType')
     file = request.files['file']
     if file is None:
         return "400"
-    body = request.get_json()
-    if body is None:
+    
+    if getFileExtension(file.filename) not in ALLOWED_EXTENSIONS:
         return "400"
     
+    mapping = request.form.get('mapping')
+    if mapping is None:
+        return "400"
+
+    filePath = os.path.join(os.getcwd(), 'core', 'storage', 'uploads', file.filename)
+    file.save(filePath)
+
+    m = Mapping(db)
+    try:
+        m.ProcessCsv(filePath,mapping)
+    except Exception as e:
+        return str(e)
+    finally:
+        os.remove(filePath)
 
     return "200"
 

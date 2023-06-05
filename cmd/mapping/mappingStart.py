@@ -4,10 +4,10 @@ import os
 os.environ['db'] = 'database.db'
 from pkg.storage.database import Database
 
-from core.mapping.mappingStart import mapping
+from core.mapping.mappingStart import Mapping
 def main():
     database = Database()
-    m = mapping(database)
+    m = Mapping(database)
 
     FileName = 'Northwind.json'
     ProcessFolderName = 'verwerken'

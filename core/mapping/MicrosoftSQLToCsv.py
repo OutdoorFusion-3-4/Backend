@@ -11,9 +11,9 @@ def export_tables_to_csv(server, database):
 
     driver = '{SQL Server}' # this might change depending on your SQL Server driver
 
-    cnxn = pyodbc.connect('DRIVER='+driver+';SERVER='+server+';DATABASE='+database+';Trusted_Connection=yes')
+    dbConnection = pyodbc.connect('DRIVER='+driver+';SERVER='+server+';DATABASE='+database+';Trusted_Connection=yes')
 
-    cursor = cnxn.cursor()
+    cursor = dbConnection.cursor()
 
     # Get the list of user-defined table names
     table_names = cursor.execute("SELECT TABLE_SCHEMA, TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE'").fetchall()
@@ -37,8 +37,8 @@ def export_tables_to_csv(server, database):
         schema_name = table[0]
         table_name = table[1]
         query = f"SELECT * FROM [{schema_name}].[{table_name}]"  # use f-string and add square brackets around the table name
-        df = pd.read_sql(query, cnxn)
+        df = pd.read_sql(query, dbConnection)
         df.to_csv(os.path.join(folder_path, f'{table_name}.csv'), index=False)
 
     cursor.close()
-    cnxn.close()
+    dbConnection.close()

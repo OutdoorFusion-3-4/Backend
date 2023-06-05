@@ -2,14 +2,10 @@ import sys
 sys.path.append('./')
 import json
 import os
-import peewee
 import chardet
 from core.mapping.mappingSingleCSV import *
-from typing import Callable
-# from core.mapping.types import Mapping
 csv.field_size_limit(2147483647)
 from pkg.queries.baseQueries import *
-from core.mapping.types import MappingData
 
 class Mapping (BaseQueries):
     def __init__(self, dbConnection: IDatabase):
@@ -19,39 +15,38 @@ class Mapping (BaseQueries):
         with open(file_path, 'rb') as file:
             result = chardet.detect(file.read())
         return result['encoding']
-    
-    def ProcessCsv(self, file: bytes, mapping: MappingData):
-        globalinstances = {}
-        mappingSingleCsv(dbConnection=self.dbConnection).process_single_csv(file, mapping,globalinstances)
+    def ProcessCsv(self, filename: str, mapping: dict):
+        globalInstances = {}
+        mappingSingleCsv(dbConnection=self.dbConnection).process_single_csv(filename, mapping, globalInstances)
 
+        
     def process_csv_folder(self, folder_name, mapping_file):
         current_dir = os.path.dirname(os.path.abspath(__file__))
         json_file = os.path.join(current_dir, mapping_file)
         folder_path = os.path.join(current_dir, folder_name)
-        with open(json_file, 'r') as mapping_file:  
+        with open(json_file, 'r') as mapping_file:
             mapping = json.load(mapping_file)
 
-        globalinstances = {}
+        globalInstances = {}
 
         csv_count = sum(1 for filename in os.listdir(folder_path) if filename.endswith('.csv'))
 
         if csv_count < 2:
-            self.process_all_files_in_folder(folder_path, mappingSingleCsv(dbConnection=self.dbConnection).process_single_csv, mapping, globalinstances)
+            self.process_all_files_in_folder(folder_path, mappingSingleCsv(dbConnection=self.dbConnection).process_single_csv, mapping, globalInstances)
         else:
-            self.process_all_files_in_folder(folder_path, self.first_process_csv, mapping, globalinstances)
-            self.process_all_files_in_folder(folder_path, self.second_process_csv, mapping, globalinstances)
-            self.process_all_files_in_folder(folder_path, self.third_process_csv, mapping, globalinstances)
+            self.process_all_files_in_folder(folder_path, self.first_process_csv, mapping, globalInstances)
+            self.process_all_files_in_folder(folder_path, self.second_process_csv, mapping, globalInstances)
+            self.process_all_files_in_folder(folder_path, self.third_process_csv, mapping, globalInstances)
 
-    def process_all_files_in_folder(self,folder_path, processing_function: Callable[bytes,MappingData], mapping, globalinstances):
+    def process_all_files_in_folder(self,folder_path, processing_function, mapping, globalInstances):
         for filename in os.listdir(folder_path):
-            self.process_csv_file(filename, folder_path, processing_function, mapping, globalinstances)
-
-    def process_csv_file(self, filename, folder_path, processing_function: function, mapping, globalinstances):
+            self.process_csv_file(filename, folder_path, processing_function, mapping, globalInstances)
+    def process_csv_file(self, filename, folder_path, processing_function, mapping, globalInstances):
         if filename.endswith('.csv'):
             file_path = os.path.join(folder_path, filename)
-            processing_function(file_path, mapping, globalinstances)
+            processing_function(file_path, mapping, globalInstances)
 
-    def first_process_csv(self, filename, mapping, globalinstances):
+    def first_process_csv(self, filename, mapping, globalInstances):
         if self.dbConnection == None:
             return
         
@@ -65,18 +60,18 @@ class Mapping (BaseQueries):
                             ordermethod, original_ordermethod_id= create_order_method(table, row)
 
                             if ordermethod:
-                                globalinstances.setdefault('ordermethod', []).append((ordermethod, original_ordermethod_id))
+                                globalInstances.setdefault('ordermethod', []).append((ordermethod, original_ordermethod_id))
                                 condition_met = True
                         elif table['table_name'] == 'Product':
                             if (('custom_table_name' not in table) or ('custom_table_name' in table and os.path.basename(filename) == table['custom_table_name'])):
                                 product, original_product_id, og_category_id, possible_category_name, possible_subcategory_name = create_product(mapping, table, row)  # Pass globalinstances as an argument
                                 if product:
-                                    globalinstances.setdefault('product', []).append((product, original_product_id, og_category_id, possible_category_name))
+                                    globalInstances.setdefault('product', []).append((product, original_product_id, og_category_id, possible_category_name))
                                 condition_met = True
                         elif table['table_name'] == 'Customer':
                             customer, original_customer_id = create_customer(table, row)
                             if customer and original_customer_id:
-                                globalinstances.setdefault('customer', []).append((customer, original_customer_id))
+                                globalInstances.setdefault('customer', []).append((customer, original_customer_id))
                             condition_met = True
                 if not condition_met:
                     return
