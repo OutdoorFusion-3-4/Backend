@@ -1,4 +1,3 @@
-import csv
 from core.storage.dbModels import Company, Product, Category, ProductCategory, Customer, Order, OrderProduct, OrderMethod
 import datetime
 import logging
@@ -72,6 +71,7 @@ def single_create_product_category(product, categories):
                 )
         except Exception as e:
             print(f"Error creating product category: {e}")
+
 def create_category(table, row):
     mapped_column_name = get_mapped_column(table, "name")
     mapped_column_category = get_mapped_column(table, "category_id")

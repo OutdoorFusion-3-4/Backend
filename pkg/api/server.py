@@ -97,8 +97,10 @@ def uploadFiles():
     file = request.files['file']
     if file is None:
         return "400"
-
-    """Logic for file upload"""
+    body = request.get_json()
+    if body is None:
+        return "400"
+    
 
     return "200"
 

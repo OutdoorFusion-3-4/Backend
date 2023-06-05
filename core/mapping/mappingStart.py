@@ -5,10 +5,13 @@ import os
 import peewee
 import chardet
 from core.mapping.mappingSingleCSV import *
+from typing import Callable
+# from core.mapping.types import Mapping
 csv.field_size_limit(2147483647)
 from pkg.queries.baseQueries import *
+from core.mapping.types import MappingData
 
-class mapping (BaseQueries):
+class Mapping (BaseQueries):
     def __init__(self, dbConnection: IDatabase):
         self.dbConnection = dbConnection
         
@@ -16,12 +19,16 @@ class mapping (BaseQueries):
         with open(file_path, 'rb') as file:
             result = chardet.detect(file.read())
         return result['encoding']
+    
+    def ProcessCsv(self, file: bytes, mapping: MappingData):
+        globalinstances = {}
+        mappingSingleCsv(dbConnection=self.dbConnection).process_single_csv(file, mapping,globalinstances)
 
     def process_csv_folder(self, folder_name, mapping_file):
         current_dir = os.path.dirname(os.path.abspath(__file__))
         json_file = os.path.join(current_dir, mapping_file)
         folder_path = os.path.join(current_dir, folder_name)
-        with open(json_file, 'r') as mapping_file:
+        with open(json_file, 'r') as mapping_file:  
             mapping = json.load(mapping_file)
 
         globalinstances = {}
@@ -35,10 +42,11 @@ class mapping (BaseQueries):
             self.process_all_files_in_folder(folder_path, self.second_process_csv, mapping, globalinstances)
             self.process_all_files_in_folder(folder_path, self.third_process_csv, mapping, globalinstances)
 
-    def process_all_files_in_folder(self,folder_path, processing_function, mapping, globalinstances):
+    def process_all_files_in_folder(self,folder_path, processing_function: Callable[bytes,MappingData], mapping, globalinstances):
         for filename in os.listdir(folder_path):
             self.process_csv_file(filename, folder_path, processing_function, mapping, globalinstances)
-    def process_csv_file(self, filename, folder_path, processing_function, mapping, globalinstances):
+
+    def process_csv_file(self, filename, folder_path, processing_function: function, mapping, globalinstances):
         if filename.endswith('.csv'):
             file_path = os.path.join(folder_path, filename)
             processing_function(file_path, mapping, globalinstances)
@@ -72,6 +80,7 @@ class mapping (BaseQueries):
                             condition_met = True
                 if not condition_met:
                     return
+                
     def second_process_csv(self, filename, mapping, globalinstances):
         with open(filename, 'r', encoding=self.get_file_encoding(filename)) as file:
             reader = csv.DictReader(file)

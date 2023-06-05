@@ -9,7 +9,7 @@
         "OtherCategory_id": "ProductCategoryID"
       }
     },
-{
+    {
       "table_name": "Category",
       "custom_table_name": "ProductCategory.csv",
       "column_names": {
@@ -44,7 +44,6 @@
         "description": "description"
       }
     },
-
     {
       "table_name": "Customer",
       "custom_table_name": "Customer.csv",
@@ -64,14 +63,13 @@
       }
     },
     {
-  "table_name": "OrderProduct",
+      "table_name": "OrderProduct",
       "custom_table_name": "SalesOrderDetail.csv",
-  "column_names": {
-    "quantity": "OrderQty",
-    "order_id": "SalesOrderID",
-    "product_id": "ProductID"
-  }
-}
-
+      "column_names": {
+        "quantity": "OrderQty",
+        "order_id": "SalesOrderID",
+        "product_id": "ProductID"
+      }
+    }
   ]
 }
