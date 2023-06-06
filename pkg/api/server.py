@@ -1,5 +1,6 @@
 
 import datetime
+import json
 import os
 from ..storage.database import Database
 import os
@@ -98,27 +99,31 @@ def logout():
 
 @api.route('/upload', methods=['POST'])
 def uploadFiles():
-    file = request.files['file']
-    if file is None:
+    mappings = request.form.get('mapping')
+    if mappings is None:
         return "400"
+    mappings:dict = json.loads(mappings)
     
-    if getFileExtension(file.filename) not in ALLOWED_EXTENSIONS:
-        return "400"
-    
-    mapping = request.form.get('mapping')
-    if mapping is None:
-        return "400"
+    for file in request.files.getlist('file'):
+        if file is None:
+            return "400"
+        
+        if getFileExtension(file.filename) not in ALLOWED_EXTENSIONS:
+            return "400"
+        
+       
 
-    filePath = os.path.join(os.getcwd(), 'core', 'storage', 'uploads', file.filename)
-    file.save(filePath)
+        mapping = mappings[file.filename]
+        filePath = os.path.join(os.getcwd(), 'core', 'storage', 'uploads', file.filename)
+        file.save(filePath)
 
-    m = Mapping(db)
-    try:
-        m.ProcessCsv(filePath,mapping)
-    except Exception as e:
-        return str(e)
-    finally:
-        os.remove(filePath)
+        m = Mapping(db)
+        try:
+            m.ProcessCsv(filePath,mapping)
+        except Exception as e:
+            return str(e)
+        finally:
+            os.remove(filePath)
 
     return "200"
 
