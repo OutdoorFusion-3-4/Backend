@@ -2,7 +2,7 @@ import bcrypt
 import csv
 
 
-def register(username, password):
+def register(username:str, password:str):
 
     with open("../../core/storage/users.csv", 'r') as readFile:
         reader = csv.reader(readFile, delimiter=' ')
@@ -23,7 +23,7 @@ def register(username, password):
 
     return True
 
-def Login(username, password):
+def Login(username:str, password:str):
     with open("../../core/storage/users.csv", 'r') as readFile:
         reader = csv.reader(readFile)
         for row in reader:

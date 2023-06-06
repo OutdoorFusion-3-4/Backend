@@ -4,7 +4,7 @@ import os
 os.environ['db'] = 'database.db'
 from pkg.storage.database import Database
 
-from core.mapping.mappingStart import Mapping
+from pkg.mapping.mappingStart import Mapping
 def main():
     database = Database()
     m = Mapping(database)

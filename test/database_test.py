@@ -3,8 +3,8 @@ import datetime
 import peewee
 from pkg.queries.DataQueries import DataQueries
 from pkg.queries.types import GraphQueryParameters
-from core.storage.dbModels import Company, Product, Category, ProductCategory, Customer, Order, OrderProduct, OrderMethod
-import core.storage.database as db
+from internal.storage.dbModels import Company, Product, Category, ProductCategory, Customer, Order, OrderProduct, OrderMethod
+import internal.storage.database as db
 import unittest
 import os
 

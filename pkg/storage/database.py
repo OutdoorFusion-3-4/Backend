@@ -1,6 +1,6 @@
 import peewee
 import os
-from core.storage.database import IDatabase
+from internal.storage.database import IDatabase
 
 
 class Database(IDatabase):

@@ -1,5 +1,5 @@
 import csv
-from core.mapping.mapping import *
+from pkg.mapping.mapping import *
 from pkg.queries.baseQueries import *
 
 class mappingSingleCsv (BaseQueries):

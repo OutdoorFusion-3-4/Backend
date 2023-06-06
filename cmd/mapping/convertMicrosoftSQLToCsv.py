@@ -1,7 +1,7 @@
 import sys
 sys.path.append('./')
 
-from core.mapping.MicrosoftSQLToCsv import export_tables_to_csv
+from pkg.mapping.MicrosoftSQLToCsv import export_tables_to_csv
 
 def main():
     server = 'DESKTOP-1BENQ06\SQLEXPRESS'

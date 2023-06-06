@@ -1,7 +1,7 @@
 import sys
 sys.path.append('./')
 
-from core.mapping.accesdbToCsv import transfer_access_to_csv
+from pkg.mapping.accesdbToCsv import transfer_access_to_csv
 
 def main():
     DatabaseName = 'aenc.accdb'
