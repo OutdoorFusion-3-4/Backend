@@ -1,10 +1,8 @@
 import bcrypt
 import csv
 
-
 def register(username:str, password:str):
-
-    with open("../../core/storage/users.csv", 'r') as readFile:
+    with open("internal/storage/users.csv", 'r') as readFile:
         reader = csv.reader(readFile, delimiter=' ')
         for row in reader:
             try:
@@ -15,7 +13,7 @@ def register(username:str, password:str):
             except:
                 pass
 
-        with open("../../core/storage/users.csv", 'a', newline='') as writeFile:
+        with open("internal/storage/users.csv", 'a', newline='') as writeFile:
             writer = csv.writer(writeFile)
             salt = bcrypt.gensalt()
             hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
@@ -24,7 +22,8 @@ def register(username:str, password:str):
     return True
 
 def Login(username:str, password:str):
-    with open("../../core/storage/users.csv", 'r') as readFile:
+    
+    with open("internal/storage/users.csv", 'r') as readFile:
         reader = csv.reader(readFile)
         for row in reader:
             if row[0] == username:

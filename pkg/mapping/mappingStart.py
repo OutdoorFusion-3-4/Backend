@@ -1,9 +1,10 @@
+import csv
 import sys
 sys.path.append('./')
 import json
 import os
 import chardet
-from core.mapping.mappingSingleCSV import *
+from pkg.mapping.mappingSingleCSV import *
 csv.field_size_limit(2147483647)
 from pkg.queries.baseQueries import *
 

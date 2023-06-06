@@ -8,3 +8,4 @@ PyJWT
 peewee
 python-dateutil
 pyodbc
+chardet
