@@ -1,5 +1,5 @@
 import unittest
-from core.ml import predictor
+from pkg.ml import predictor
 
 import numpy as np
 import os

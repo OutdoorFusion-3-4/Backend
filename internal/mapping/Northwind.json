@@ -1,0 +1,65 @@
+{
+  "tables": [
+    {
+      "table_name": "Category",
+      "column_names": {
+        "name": "CategoryName",
+        "description": "Description",
+        "category_id": "CategoryID"
+      }
+    },
+    {
+      "table_name": "OrderMethod",
+      "column_names": {
+        "orderMethod_id": "ShipperID",
+        "orderMethod_name": "CompanyName"
+      }
+    },
+    {
+      "table_name": "Product",
+      "column_names": {
+        "product_name": "ProductName",
+        "product_sale_price": "UnitPrice",
+        "description": "QuantityPerUnit",
+        "company": "Company",
+        "category_id": "CategoryID",
+        "original_id": "ProductID"
+      }
+    },
+    {
+      "table_name": "Company",
+      "column_names": {
+        "company_name": "Northwind",
+        "description": "description"
+      }
+    },
+
+    {
+      "table_name": "Customer",
+      "column_names": {
+        "customer_id": "CustomerID",
+        "name": "ContactName",
+        "country": "Country"
+      }
+    },
+    {
+      "table_name": "Order",
+      "column_names": {
+        "order_date": "OrderDate",
+        "customer": "CustomerID",
+        "shipping_method": "ShipVia",
+        "product": "ProductId",
+        "original_id": "OrderID"
+      }
+    },
+    {
+  "table_name": "OrderProduct",
+  "column_names": {
+    "quantity": "Quantity",
+    "order_id": "OrderID",
+    "product_id": "ProductID"
+  }
+}
+
+  ]
+}

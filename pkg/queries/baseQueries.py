@@ -1,4 +1,4 @@
-from core.storage.database import IDatabase
+from pkg.storage.database import IDatabase
 from dateutil import parser
 class BaseQueries:
     def __init__(self, dbConnection: IDatabase):

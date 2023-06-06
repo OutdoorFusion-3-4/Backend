@@ -1,5 +1,5 @@
-from core.storage.database import IDatabase
-from core.storage.dbModels import Category, OrderMethod, Product, Order, OrderProduct, ProductCategory, Customer
+from pkg.storage.database import IDatabase
+from internal.storage.dbModels import Category, OrderMethod, Product, Order, OrderProduct, ProductCategory, Customer
 from .types import GraphQueryParameters, Results
 from .baseQueries import BaseQueries
 from peewee import fn

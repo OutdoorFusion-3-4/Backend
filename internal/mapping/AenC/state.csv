@@ -1,0 +1,64 @@
+state_id,state_name,state_capital,country,region
+AB,Alberta,Edmonton,CAN,Canada
+AK,Alaska,Juneau,USA,Western
+AL,Alabama,Montgomery,USA,South
+AR,Arkansas,Little Rock,USA,South
+AZ,Arizona,Phoenix,USA,Western
+BC,British Columbia,Victoria,CAN,Canada
+CA,California,Sacramento,USA,Western
+CO,Colorado,Denver,USA,Central
+CT,Connecticut,Hartford,USA,Eastern
+DC,District of Columbia,Washington,USA,Eastern
+DE,Delaware,Dover,USA,Eastern
+FL,Florida,Tallahassee,USA,South
+GA,Georgia,Atlanta,USA,South
+HI,Hawaii,Honolulu,USA,Western
+IA,Iowa,Des Moines,USA,Central
+ID,Idaho,Boise,USA,Western
+IL,Illinois,Springfield,USA,Central
+IN,Indiana,Indianapolis,USA,Central
+KS,Kansas,Topeka,USA,Central
+KY,Kentucky,Frankfort,USA,Central
+LA,Louisiana,Baton Rouge,USA,South
+MA,Massachusetts,Boston,USA,Eastern
+MB,Manitoba,Winnipeg,CAN,Canada
+MD,Maryland,Annapolis,USA,Eastern
+ME,Maine,Augusta,USA,Eastern
+MI,Michigan,Lansing,USA,Central
+MN,Minnesota,St. Paul,USA,Central
+MO,Missouri,Jefferson City,USA,Central
+MS,Mississippi,Jackson,USA,South
+MT,Montana,Helena,USA,Central
+NB,New Brunswick,Fredericton,CAN,Canada
+NC,North Carolina,Raleigh,USA,Eastern
+ND,North Dakota,Bismarck,USA,Central
+NE,Nebraska,Lincoln,USA,Central
+NF,Newfoundland,St. John's,CAN,Canada
+NH,New Hampshire,Concord,USA,Eastern
+NJ,New Jersey,Trenton,USA,Eastern
+NM,New Mexico,Santa Fe,USA,Western
+NS,Nova Scotia,Halifax,CAN,Canada
+NT,Northwest Territories,Yellowknife,CAN,Canada
+NV,Nevada,Carson City,USA,Western
+NY,New York,Albany,USA,Eastern
+OH,Ohio,Columbus,USA,Central
+OK,Oklahoma,Oklahoma City,USA,Central
+ON,Ontario,Toronto,CAN,Canada
+OR,Oregon,Salem,USA,Western
+PA,Pennsylvania,Harrisburg,USA,Eastern
+PE,Prince Edward Island,Charlottetown,CAN,Canada
+PQ,Québec,Québec,CAN,Canada
+RI,Rhode Island,Providence,USA,Eastern
+SC,South Carolina,Columbia,USA,Eastern
+SD,South Dakota,Pierre,USA,Central
+SK,Saskatchewan,Regina,CAN,Canada
+TN,Tennessee,Nashville,USA,Central
+TX,Texas,Austin,USA,South
+UT,Utah,Salt Lake City,USA,Western
+VA,Virginia,Richmond,USA,Eastern
+VT,Vermont,Montpelier,USA,Eastern
+WA,Washington,Olympia,USA,Western
+WI,Wisconsin,Madison,USA,Central
+WV,West Virginia,Charleston,USA,Eastern
+WY,Wyoming,Cheyenne,USA,Western
+YT,Yukon Territory,Whitehorse,CAN,Canada

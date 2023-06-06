@@ -3,7 +3,7 @@ sys.path.append('./')
 import os
 os.environ['db'] = 'database.db'
 
-from core.storage.dbModels import Company, Product, Category, ProductCategory, Customer, Order, OrderProduct, OrderMethod
+from internal.storage.dbModels import Company, Product, Category, ProductCategory, Customer, Order, OrderProduct, OrderMethod
 from pkg.storage.database import Database
 
 def main():
